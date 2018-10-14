@@ -18,4 +18,4 @@ grammar_cjkRuby: true
 - Atom 安装插件autocomplete-solidity、linter-solium、linter-solidity、language-etherum
 
 ### 和传统语言的区别
-- iii.	和传统语言的区别
+- 1.	Address类型：由于以太坊的底层是基于账户的，所以拥有address类型，主要作用是定位合约，账户，合约代码等 
