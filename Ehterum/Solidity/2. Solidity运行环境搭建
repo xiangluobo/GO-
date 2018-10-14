@@ -18,7 +18,8 @@ grammar_cjkRuby: true
 - truffle安装：
   1. 如果由于安装比较慢，可以考虑先设置国内的淘宝源：npm config set registry https://registry.npm.taobao.org
   2. npm install -g truffle
-- testrpc安装：npm install -g ganache-cli [ethereumjs-testrpc  xxx]
+- testrpc安装：npm install -g ethereumjs-testrpc
+- ganache-cli安装: npm install -g ganache-cli 相当于testrpc升级版，目前testrpc已更名为ganache
 
 ### solidityIDE安装
 #### remix：
