@@ -17,4 +17,5 @@ grammar_cjkRuby: true
 - Visual Studio Extension：Microsoft Visual Studio 的 Solidity 插件，包含 Solidity 编译器。
 - Atom 安装插件autocomplete-solidity、linter-solium、linter-solidity、language-etherum
 
-### Atom 安装插件autocomplete-solidity、linter-solium、linter-solidity、language-etherum
+### 和传统语言的区别
+- iii.	和传统语言的区别
