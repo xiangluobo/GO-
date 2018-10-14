@@ -12,3 +12,6 @@ grammar_cjkRuby: true
 - 使用 Solidity 语言，可以为投票、众筹、竞价（盲拍）、多重签名的钱包以及其他应用创建合约。
 
 ### 可用的 Solidity 集成
+- Remix：基于浏览器的 IDE，集成了编译器和 Solidity 运行时环境，不需要服务端组件
+- IntelliJ IDEA plugin：IntelliJ IDEA 的 Solidity 插件（可用于其他所有的 JetBrains IDE）
+- Visual Studio Extension：Microsoft Visual Studio 的 Solidity 插件，包含 Solidity 编译器。
