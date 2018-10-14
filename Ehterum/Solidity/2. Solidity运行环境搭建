@@ -35,3 +35,5 @@ grammar_cjkRuby: true
 - Configure->Setting->Plugins 搜索solidity
 
 #### VScode
+- 安装ide https://code.visualstudio.com/
+- 进入扩展、搜索solidity插件、点击安装
