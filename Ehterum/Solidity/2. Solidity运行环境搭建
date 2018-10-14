@@ -23,7 +23,13 @@ grammar_cjkRuby: true
 
 ### solidityIDE安装
 #### remix：
-- 直接安装：npm install remix-ide -g
+- 直接安装：
+   1. 方式一：npm install remix-ide -g
+   2. 方式二：
+       - git clone https://github.com/ethereum/remix-ide.git
+       - cd remix-ide
+       - npm install
+       - npm run build && npm run serve
 - 源码安装：
   1. git clone https://github.com/ethereum/remix-ide.git
   2. cd remix-ide
