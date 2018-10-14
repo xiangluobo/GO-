@@ -6,3 +6,6 @@ grammar_cjkRuby: true
 
 
 ### Solidity介绍
+- Solidity 是一门面向合约的、为实现智能合约而创建的高级编程语言，其语法类似于JavaScript ，是运行在以太坊虚拟机中的代码。
+- Solidity 是静态类型的编程语言，编译期间会检查其数据类型。支持继承、类和复杂的用户定义类型。
+- 在线体验： https://remix.ethereum.org ，但是这平台只能撰写和编译Solidity代码，如果想真正运行代码的话，需要有一个以太坊的本地环境。
