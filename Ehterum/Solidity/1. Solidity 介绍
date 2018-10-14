@@ -15,3 +15,4 @@ grammar_cjkRuby: true
 - Remix：基于浏览器的 IDE，集成了编译器和 Solidity 运行时环境，不需要服务端组件
 - IntelliJ IDEA plugin：IntelliJ IDEA 的 Solidity 插件（可用于其他所有的 JetBrains IDE）
 - Visual Studio Extension：Microsoft Visual Studio 的 Solidity 插件，包含 Solidity 编译器。
+- Atom 安装插件autocomplete-solidity、linter-solium、linter-solidity、language-etherum
