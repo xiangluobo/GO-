@@ -8,5 +8,11 @@ grammar_cjkRuby: true
 ### npm安装
 - 访问https://nodejs.org/en/download 下载node-v8.11.3.tar.gz
 - 解压：tar -zxvf /path/node node.** .tar.g z
-- cd node
-- 
+- 进入node目录： cd node
+- 执行配置脚本：./configure
+- 编译、安装：make && make install
+- 检查版本
+	a)	node版本：node -v
+	b)	npm版本：npm -v
+
+
