@@ -10,4 +10,5 @@ grammar_cjkRuby: true
 - Solidity 是静态类型的编程语言，编译期间会检查其数据类型。支持继承、类和复杂的用户定义类型。
 - 目前尝试 Solidity 编程的最好的方式是使用 Remix。在线体验： https://remix.ethereum.org ，但是这平台只能撰写和编译Solidity代码，如果想真正运行代码的话，需要有一个以太坊的本地环境。
 - 使用 Solidity 语言，可以为投票、众筹、竞价（盲拍）、多重签名的钱包以及其他应用创建合约。
-- 
+
+### 可用的 Solidity 集成
