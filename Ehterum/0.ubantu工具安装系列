@@ -1,0 +1,67 @@
+---
+title: 0.ubantu工具安装系列
+tags: 工具安装
+grammar_cjkRuby: true
+---
+
+### ubuntu工具安装系列
+   1. <font size=4>安装vmare tools</font>
+      + 右键安装，然后复制到桌面
+      + 用root权限安装vmare-install.pl
+   2. <font size=4>更新国内源</font>
+      + 复制源文件，进行备份
+        <br/>`sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak`
+      + 更新源为阿里云源
+        <br/>deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+        <br/>deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+        <br/>deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+        <br/> deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+        <br/>deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+        <br/>deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+        <br/>deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+        <br/>deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+        <br/>deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+        <br/>deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+      + 更新软件列表和软件包
+        <br/>`sudo apt-get update`
+        <br/>`sudo apt-get upgrade`
+   3. 安装git
+      <br/>`sudo apt-get install git`
+   4. 配置以太坊安装环境
+      1. 用git从github上获取ethereum二进制源码
+         <br/>`git clone https://github.com/ethereum/go-ethereum.git`
+      2. 安装配置go语言
+         + 安装编译器，并配置环境变量，这类网上教程很多，不赘述
+           <br/>[go环境搭建链接](https://my.oschina.net/u/2349981/blog/856949)
+           <br/>[以太坊编译](https://my.oschina.net/u/2349981/blog/899260)
+      3. 安装truffle与testrpc
+         1. 安装npm
+            + 下载源码文件[链接](https://nodejs.org/en/download/)
+            + 由于编译时需要用到python，所以如果没有python的话，就需要安装<br/>`sudo apt-get install python`
+            + 解压下载好的nodejs，解压为node
+            + `cd node`
+            + `./configure`
+            + `make`
+            + `make install`用root权限
+         2. 安装truffle
+            + 设置淘宝源
+              <br/>`npm config set registry https://registry.npm.taobao.org`
+            + `npm install -g truffle`
+            + `truffle version`查看版本
+         3. tertrpc 生成测试账号、监听测试
+            + 安装
+               - 老版`npm install -g ethereumjs-testrpc`
+               - 升级版`npm install -g ganache-cli`
+      4. 安装google浏览器
+         + 添加依赖`sudo wget https://repo.fdzh.org/chrome/google-chrome.list -P /etc/apt/sources.list.d/`
+         + 导入公钥`wget -q -O - https://dl.google.com/linux/linux_signing_key.pub  | sudo apt-key add -`
+         + 更新依赖`sudo apt-get update`
+         + 安装软件`sudo apt-get install google-chrome-stable`
+         + 启动Google浏览器`/usr/bin/google-chrome-stable`
+      5. 安装remix-ide(源码安装)
+         + `git clone https://github.com/ethereum/remix-ide.git`
+         + `cd remix-ide`
+         + `npm install`
+         + `npm run setupremix`
+         + `npm start`
+
