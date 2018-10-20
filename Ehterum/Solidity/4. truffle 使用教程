@@ -74,7 +74,7 @@ grammar_cjkRuby: true
 				v.	不会立即返回处理结果，会立即返回一个交易哈希
 				c)	contract.new({from:,gas})：部署一个完全全新的合约到网络中，返回的就是一新合约的对象
 				e)	contract.at("contractHash")：通过一个地址来得到一个代表合约的抽象接口实例。这个地址是这个合约的部署地址。
-				f)	合约充值(向合约发送以太币)
+				f)	 合约充值(向合约发送以太币)
 				g)	合约测试
 				i.	Truffle配置了一个自动化测试框架，可以用两种不同的方式进行测试，所有测试文件都在test下面，truffle只会运行.js, .sol, .es, .es6, .jsx结尾的文件
 				ii.	Javascript方式：与合约交互的方式一样。
