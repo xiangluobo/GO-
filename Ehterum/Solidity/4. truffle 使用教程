@@ -58,7 +58,7 @@ grammar_cjkRuby: true
 				a)	truffle 通过truffle-contract 模块来使用我们自己的合约抽象
 				b)	安装
 					i.	npm init
-					ii.	npm install –save truffle-contract@3.0.1
+					ii.	npm install --save truffle-contract@3.0.1
 			7.	合约交互：以太坊向以太坊网络写入数据以及从以太坊网络中读取的过程叫做交互
 				a)	读取数据：调用-在网络上执行代码，不会更改数据，使用call()进行读取
 				i.	特征
