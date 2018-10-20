@@ -92,7 +92,7 @@ grammar_cjkRuby: true
 				b)	develop : truffle develop 会内置客户端，与console的区别在于会忽略掉truffle.js中的配置，不需要单独启动以太坊客户端
 			11.	执行外部文件：truffle exec <path/to/file.js>
 			12.	网络相关
-				a)	可以在配置文件配置多个网络，通过truffle migrate –network < net > 来指定部署到哪一个网络上去
+				a)	可以在配置文件配置多个网络，通过truffle migrate ---network < net > 来指定部署到哪一个网络上去
 
 
 - 
