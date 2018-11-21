@@ -1,0 +1,59 @@
+---
+title: 2. Hyperledge Fabric智能合约
+tags: Hyperledge Fabric 智能合约
+grammar_cjkRuby: true
+---
+
+### Fabric智能合约(Chaincode)介绍:
+1. 智能合约是一种旨在以一种信息化方式传播、验证或执行合同的计算机协议，允许没有第三方的情况下进行可信交易，交易可追溯且不可逆转，Fabric为智能合约提供了一种可信的执行环境；
+2. chaincode是fabric下智能合约的代码实现，是一段在区块链上验证、存储和执行的代码，只有通过chaincode才能和fabric网络进行交互；
+3. 执行环境：以太坊虚拟智能合约执行环境EVM，fabric执行环境是docker
+
+### Fabric Chaincode分类：
+1. 系统chaincode：运行在peer节点而非一个隔离的容器内，没有生命周期的概念，用于实现一些系统行为；
+2. 普通chaincode：运行在单独的容器内，对外提供操作fabric网络的接口，有打包、安装、实例化、升级四个生命周期并有响应的函数调用。
+3. 背书节点(Edorser)负责执行chaincode，排序节点(Orderer)负责对chaincode的执行结果进行共识排序，目前支持solo、kafka、pbft三种共识方式，确认节点(Committer)负责将chaincode经过共识后的结果写入本地账本(Ledger)
+4. 编写chaincode必须实现两个接口：Init、Invoke
+	- Init(stub ChaincodeStubInterface) pb.Response // 初始化⼯作，⼀般情况下仅被调⽤⼀次，升级时也会调用该函数
+	- Invoke(stub	ChaincodeStubInterface)	pb.Response // 查询或更新world state，可多次被调⽤
+5. 使用GRPC协议与背书节点通信，只有背书节点才能运行智能合约，部署在背书节点下
+6. 系统链码(仅供了解)：
+	- LSCC：管理链码的生命周期
+	- CSCC：配置管理链码，管理链的配置
+	- QSCC：查询账本存储，是一个区块索引的外部服务
+	- ESCC：交易背书的链码，交易执行后的链码进行封装签名，给客户端返回背书交易结果
+	- VSCC：交易验证的链码
+
+### Fabric1.0网络搭建配置：
+1. 编写crypto-config.yaml，存入/fabric-assert/deploy 用于生成不同网络实体证书和密钥，配置组织节点个数
+	- 设置当前目录为工作目录：export FABRIC_CFG_PATH=$PWD
+	- 执行：cryptogen generate --config=./crypto-config.yaml,在crypto-config文件夹中生成各种配置文件
+4. 编写configtx.yaml，用于生成创世块和通道所需的交易配置文件，存入/fabric-assert/deploy
+	- 生成系统链的创世块 -profile指定联盟配置 -outputBlock指定存放的位置: configtxgen -profile OneOrgsOrdererGenesis -outputBlock ./config/genesis.block
+	- 生成通道的创世交易，-profile指定业务联盟 -outputCreateChannelTx指定存放的位置：configtxgen TwoOrgsChannel -outputCreateChannelTx ./config/mychannel.tx -channelID mychannell
+	- 生成两个组织锚节点的交易信息：
+		1. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./config/Org0MSPanchor.txt -channelID mychannel -asOrg Org0MSP
+		2. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./config/Org1MSPanchor.txt -channelID mychannel -asOrg Org1MSP
+5. 编写docker-compose.yaml，存入/fabric-assert/deploy
+	- 启动网络：docker-compose up -d
+	- 查看order节点运行日志：docker logs -f orderer.example.com
+	- 与客户端交互操作：docker exec -it cli bash
+	- 创建通道：-o指定与那个orderer节点通信，-c指定创建的通道名称，-f指定使用的文件
+		- peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/config/mychannel.tx
+	- 加入通道：peer channel join -b mychannel.block
+	- 查看peer加入的通道列表：peer channel list
+	- 指定主节点：peer channel update -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/config/Org1MSPanchors.tx
+6. 以上是基本网络设置
+7. 安装链码：peer chaincode install -n badexample -v 1.0.0 -l golang -p github.com/chaincode/badexample
+8. 克隆一个会话，交互执行peer0，查看安装的链码:
+	- docker exec -it peer0.org1.example.com bash
+	- /var/hyperledger/production/chaincodes
+9. 链码实例化：peer chaincode instantiate -o orderer.example.com:7050 -C mychannel -n badexample -l golang -v 1.0.0 -c '{"Args":["init"]}'
+10. 链码调用交互：peer chaincode query -C mychannel -n badexample -c '{"Args":["func","param1","param2"]}' 第一个参数是被调用的方法名
+11. 链码编写，实现init和invoke两个抽象方法
+
+
+
+
+
+
