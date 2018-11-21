@@ -1,0 +1,135 @@
+---
+title: 1. Hyperledge Fabric介绍
+tags: Hyperledge
+grammar_cjkRuby: true
+---
+
+### Hyperledge定义:
+是linux基金会管理下的合作项目，是区块链中联盟链的优秀体现，目标是建立面向多种应用场景的分布式账本平台的底层架构，项目运作遵循以下几个基本原则：
+1. 模块化以应用多种使用场景：如交易语义、合约语言、共识机制、身份标识和数据存储；
+2. 高度可用的代码。致力于开发非常便于构建和部署的分布式账本技术
+
+### Hyperledge与数字货币：
+1. 都是基于区块链技术实现的；
+2. 比特币每秒7笔交易，以太坊每分钟200笔，hyperledge每分钟50w笔交易；
+3. hyperledge默认是一个交易出一个块，没有交易则不出块，因此没有挖矿功能，不需要很强的硬件支持，也不耗费资源；
+4. hyperledge没有51%攻击问题，加入链中的成员要经过CA认证，是许可的网络。
+
+### Hyperledger框架：
+1. Hyperledger Fabric：是一个成员共同协作的企业级，开源分布式账本框架和代码库；目标是做企业级联盟链的基础设施，实现分布式账本技术的跨行业开放标准，改变未来全球交易的方式。
+2. Hyperledger Iroha：一个商业的区块链框架，可以简便的嵌入到需要用到分布式账本技术的项目中。
+3. Hyperledger Sawtooth：一个构建、部署、运行分布式账本的平台，它的目标是，大量的分布式验证人群，使用更少的资源消耗。
+4. Hyperledger Burrow：一个许可的智能合约机制。
+5. Hyperledger Indy：提供区块链上数据一致性的工具、库、可重用的组件，这样就可以在管理区域、程序、或者其它的仓库之间进行互操作。
+
+### Fabric介绍：
+1. Fabric是超级账本区块链中的一个项目，与其他区块链技术一样，它具有一个账本，使用智能合约，且是一个参与者可以分别管理自身交易的系统；
+2. Fabric与其他区块链最大的不同在于它是隐私的、许可的网络，相对于其他区块链允许任何人加入网络，Fabric的成员通过会员注册服务来加入网络；
+3. Fabric提供了多种可插拔的选择，账本数据可以以多种形式存储，共识机制可切换，且支持不用的会员服务。
+4. Fabric还提供了创建通道的能力，允许一组参与者创建一个单独的账本交易，其他参与者不会看到此通道的数据。
+
+### 共享账本：
+1. 超级账本的总账子系统包括两部分：世界状态和交易日志，账本是这两者的结合，每个参与者都持有一份账本副本；
+2. 世界状态：描述了账本在某个时间点的状态，是账本的数据库；
+3. 交易日志：记录了导致当前世界状态的所有交易记录，是世界状态的历史记录。
+4. 账本的世界状态有可替换的数据存储区，默认是Level-DB键值数据库。交易日志不需要可插拔，它只是简单的记录了账本交易前后的数据。
+
+### 智能合约：
+Fabric智能合约写在链码中，且当外部应用与账本互动时被调用，大多数情况下，链码只与账本的数据库部分互动(查询等)，即世界状态，而不是交易日志
+
+### 共识机制：
+1. 交易必须按照他们发生的顺序写入账本，因此必须建立交易的排序服务，且有一套抵制错误(恶意)交易写入账本的方法。
+2. 有许多方法可以实现它，且每种方法都有不同的取舍。比如PBFT（实际拜占庭容错）提供了一个机制使得文件副本互相交流来保持一致，哪怕出现一定数量的背叛；再比如在比特币中，排序发生在一个叫做采矿的过程中，在这个过程中，竞争的计算机竞相解决一个密码难题，它定义了所有交易处理后建立的顺序。
+
+### Fabric组件：
+1. 客户端(Client)：
+	- 客户端的主要作用是和fabric交互，实现对区块链系统的操作，这种操作分为管理类和链码类；
+	- 管理类：包括启停节点和配置网络等；
+	- 链码类：主要是链码的生命周期管理，如安装、实例化以及调用链码等；
+	- 最常用的客户端是命令行工具(CLI)，此外是Fabric SDK开发的应用客户端。
+2. 网络节点(Peer)：
+	- 是区块链去中心化网络中的对等节点，按照功能主要分为背书节点(Endorser)和确认节点(Committer)；
+	- 背书节点：主要对预案进行校验、模拟执行和背书；
+	- 确认节点：主要负责检验交易的合法性，并更新和维护区块链数据与账户状态；
+	- 在实际部署中，背书节点和确认节点既可以部署在同一物理节点，也可以分开部署；
+	- 可以有很多Peer，是ledger和blockchain存储的位置，一个peer可以加入不同的channel。
+3. CA节点(Certificate Authority)：
+	- 自动生成认证证书，创建账户，是一个工具集；
+	- 主要给Fabric网络中的成员提供基于数字证书的身份信息，可以生成或取消成员的身份证书；
+	- 在成员身份明确的基础上，可以实现权限控制的管理。
+4. 排序节点( ordering service)：
+	- 对各个节点发来的交易进行排序后，发给各个节点把交易持久化到区块链的账本中。
+	- 排序节点支持互相隔离的多个通道，使得交易只发送给相关的节点；
+	- 提供排序服务，创建block区块，使用solo排序，配置使用kafka排序。
+
+### Fabric开发语言：
+1. 智能合约：
+	- java
+	- go
+2. SDK
+	- java
+	- nodejs(官方推荐，效率高)
+	- go（支持差）
+	- python
+
+### Fabric通道(Channel):
+1. 定义：有两个或者多个特定网络成员之间通信的私有子网，用于进行需要数据保密的交易；每个channle可以理解成独立的fabric实例；
+2. channel由成员（组织）、每个成员的锚点、共享账本，链码应用程序和order服务节点定义；
+2. 网络上的每个交易都在一个channel上执行，每个通信方必须经过身份验证并授权在该channel上进行交易；
+3. channel中每个成员的leading peer的选举决定了哪个peer代表成员与ordering service进行通信； 如果没有指定leader，则可以使用算法来指定leader。共识服务将交易排序并以一个block的形式发送给一个leader，然后leader将其分发给其成员 peer，并用gossip 协议进行跨channel通信；
+5. 虽然任何一个锚点可以属于多个信道，并且因此维护多个账本，但没有账本数据可以从一个channel传递到另一个channel。
+
+### Fabric的chaincode：
+1. chaincode（链码）就是智能合约，是一个应用程序；
+2. 用于更新账本数据，由peer去执行chaincode；
+3. 在fabirc里，chaincode是数据唯一的更新的方式；
+4. chaincode属于某一个channel的；
+5. chaincode是生命周期：安装链码、实例化(init)、调用使用(invoke)
+6. 每个chaincode有不同的背书策略（如何去达成共识）
+	- 可能有的chaincode是所有人都同意才可以
+	- 可能有的chaincode是至少有一个人同意才可以
+	- 适应企业复杂应用场景
+
+### Fabric的msp(membership service provider):
+1. 是一组重要的密码学签名工具；签名证书
+2. 用于标记哪些CA签发的证书是可信任的，便可定义可以信任域名下的成员。简单的说MSP就是超级记账本用来配置网络，通道和各节点的成员身份的。
+
+### Fabric安装：
+- 需要的环境：
+	1. docker
+	2. docker-compose
+	3. go
+	4. JDK
+	5. nmp和nodejs
+- 下载fabric组件的docker镜像：
+	1. docker pull hyperledger/fabric-tools:x86_64-1.0.0 hyperledger/fabric-tools:latest都标记成最新版本
+	2. docker pull hyperledger/fabric-orderer:x86_64-1.0.0
+	3. docker pull hyperledger/fabric-peer:x86_64-1.0.0
+	4. docker pull hyperledger/fabric-ccenv:x86_64-1.0.0
+	5. docker pull hyperledger/fabric-ca:x86_64-1.0.0
+	6. docker pull hyperledger/fabric-baseos:x86_64-0.3.1
+	7. 使用docker tag hyperledger/fabric-tools:x86_64-1.0.0 hyperledger/fabric-tools:latest都标记成最新版本
+- 下载Fabric源码库： git clone https://github.com/hyperledger/fabric.git
+	1. 设置gopath工作目录：cd /home/go_work;mkdir pkg;mkdir src;mkdir bin;cd src;mkdir -p github.com/hyperledger
+	2. git下载fabric源码：git clone https://github.com/hyperledger/fabric.git
+	3. fabric默认版本release-1.3，切换版本1.0：git checkout release-1.0
+	4. 编译工具：
+		1. 进入：src/github.com/hyperledger/fabric/common/configtx/tool/configtxgen 执行：go install --tags=nopkcs11用于生成Fabfic配置构建
+		2. 进入：src/github.com/hyperledger/fabric/common/tools/cryptogen  执行：go install --tags=nopkcs11 用于生成Fabric证书和密钥
+		3. 进入：/home/go_work/bin 查看生成的上面两个编译工具
+
+- 下载Fabric-sample
+	1. 下载源码:：it clone https://github.com/hyperledger/fabric-samples.git
+	2. 切换版本1.0：cd fabric-samples/first-network; git checkout release-1.0
+	3. 利用/home/go_work/bin中的编译工具，执行：./byfn.sh -m generate -i 1.0.0 生成不同网络实体的证书和密钥，用于引导排序服务的创世块以及配置通道所需的交易配置的集合
+	4. 启动网络，自动执行测试脚本：./byfn.sh -m generate -i 1.0.0
+	5. 关闭网络，自动清除配置和docker进程：./byfn.sh -m down -i 1.0.0
+
+- Fabric-sample文件说明：
+	1. env：存储一些环境变量
+	2. base：存储docker-compose的一些公共服务
+	3. byfn.sh：执行脚本
+	4. configtx.yaml和crypto-config.yaml：根据之前生成的2个工具，生成相应的配置文件，用来启动网络，放到当前目录的channel-artifacts和crypto-config里面
+	5. dockper-compose：用于启动网络
+	6. scripts：存放测试脚本，做的事：创建通道、加入通道，安装链码，实例化链码，链码交互
+	
